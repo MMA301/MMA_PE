@@ -10,7 +10,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/actions/authActions";
 
-const Header = () => {
+const Header = ({ title }) => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>Đặt phòng</Text>
+      <Text style={styles.title}>{title}</Text>
       <TouchableOpacity onPress={handleLogout} style={styles.button}>
         <MaterialIcons name="logout" size={24} color="white" />
       </TouchableOpacity>
