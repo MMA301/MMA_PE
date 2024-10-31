@@ -81,12 +81,11 @@ export const logout = () => {
   return async (dispatch) => {
     const auth = getAuth(getFirebaseApp());
     try {
-      await signOut(auth); // Thực hiện đăng xuất khỏi Firebase
-      // Xóa thông tin người dùng khỏi Redux store
+      await signOut(auth);
       dispatch(authenticate({ token: null, userData: null }));
-      console.log("User logged out successfully!");
+      console.log("Người dùng đã đăng xuất thành công!");
     } catch (error) {
-      console.error("Error logging out: ", error);
+      console.error("Lỗi khi đăng xuất: ", error);
     }
   };
 };

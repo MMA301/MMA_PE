@@ -11,7 +11,7 @@ export const validateString = (id, value) => {
     constraints.format = {
       pattern: ".*",
       flags: "i",
-      message: "Value can't be blank.",
+      message: "Giá trị không được để trống.",
     };
   }
 
@@ -44,7 +44,7 @@ export const validatePassword = (id, value) => {
   if (value !== "") {
     constraints.length = {
       minimum: 8,
-      message: "Must be at least 8 character",
+      message: "Phải có ít nhất 8 ký tự",
     };
   }
 

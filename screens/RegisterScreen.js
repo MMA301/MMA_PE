@@ -42,22 +42,22 @@ const RegisterScreen = ({ navigation }) => {
     const { fullName, email, password } = formState.inputValues;
 
     if (!formState.formIsValid) {
-      Alert.alert("Error", "Please fill in all fields correctly.");
+      Alert.alert("Lỗi", "Vui lòng điền chính xác tất cả các trường.");
       return;
     }
 
     try {
       await dispatch(signUp(fullName, email, password));
-      Alert.alert("Success", "Account created successfully!");
+      Alert.alert("Thành công", "Tài khoản đã được tạo thành công!");
       navigation.navigate("LoginScreen");
     } catch (error) {
-      Alert.alert("Registration Failed", error.message);
+      Alert.alert("Đăng ký không thành công", error.message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Register Screen</Text>
+      <Text style={styles.title}>Màn hình đăng ký</Text>
 
       <TextInput
         style={styles.input}
@@ -84,14 +84,14 @@ const RegisterScreen = ({ navigation }) => {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
+        <Text style={styles.buttonText}>Đăng ký</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.loginButton}
         onPress={() => navigation.navigate("LoginScreen")}
       >
-        <Text style={styles.loginText}>Already have an account? Log In</Text>
+        <Text style={styles.loginText}>Đã có tài khoản? Đăng nhập</Text>
       </TouchableOpacity>
     </View>
   );

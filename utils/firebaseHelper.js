@@ -15,20 +15,19 @@ export const getFirebaseApp = () => {
   }
 
   const firebaseConfig = {
-    apiKey: "AIzaSyAA_U05b88l1EZHbXtLprX8uq6bnZMNH3I",
-    authDomain: "bookingroom-27946.firebaseapp.com",
-    databaseURL: "https://bookingroom-27946-default-rtdb.firebaseio.com",
-    projectId: "bookingroom-27946",
-    storageBucket: "bookingroom-27946.appspot.com",
-    messagingSenderId: "110165986536",
-    appId: "1:110165986536:web:31bd416f6fd99c84da8d5d",
-    measurementId: "G-B1ENK0FFDQ",
+    apiKey: "AIzaSyD3Psz2ozjKFJdtZrUm804dGo2NeObjQLQ",
+    authDomain: "dmvinh-lonnhua.firebaseapp.com",
+    databaseURL:
+      "https://dmvinh-lonnhua-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "dmvinh-lonnhua",
+    storageBucket: "dmvinh-lonnhua.appspot.com",
+    messagingSenderId: "134756817214",
+    appId: "1:134756817214:web:1cee8a51d3e6b79334b46f",
+    measurementId: "",
   };
 
-  // Initialize Firebase
   const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-  // Initialize Firebase Auth
   initializeAuth(app, {
     persistence: getReactNativePersistence(ReactNativeAsyncStorage),
   });

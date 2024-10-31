@@ -48,9 +48,11 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     const { email, password } = formState.inputValues;
 
-    // Kiểm tra các trường trống và tính hợp lệ
+    console.log("email", email);
+    console.log("password", password);
+
     if (!formState.formIsValid) {
-      Alert.alert("Error", "Please enter both email and password.");
+      Alert.alert("Lỗi", "Vui lòng nhập cả email và mật khẩu.");
       return;
     }
 
@@ -60,26 +62,25 @@ const LoginScreen = () => {
       const { uid, stsTokenManager } = result.user;
       const { accessToken } = stsTokenManager;
 
-      // Lưu thông tin đăng nhập vào Redux
       dispatch(authenticate({ token: accessToken, userData: { uid, email } }));
-      Alert.alert("Login Successful");
+      Alert.alert("Đăng nhập thành công");
       navigation.navigate("Main");
     } catch (error) {
       // Xử lý lỗi nếu đăng nhập không thành công
-      let message = "An error occurred during login";
+      let message = "Đã xảy ra lỗi trong quá trình đăng nhập";
       if (
         error.code === "auth/user-not-found" ||
         error.code === "auth/wrong-password"
       ) {
-        message = "Invalid email or password";
+        message = "Email hoặc mật khẩu không hợp lệ";
       }
-      Alert.alert("Login Failed", message);
+      Alert.alert("Đăng nhập không thành công", message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Screen</Text>
+      <Text style={styles.title}>Màn hình đăng nhập</Text>
 
       <TextInput
         style={styles.input}
@@ -99,14 +100,14 @@ const LoginScreen = () => {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Đăng nhập</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.registerButton}
         onPress={() => navigation.navigate("RegisterScreen")}
       >
-        <Text style={styles.registerText}>Don't have an account? Sign Up</Text>
+        <Text style={styles.registerText}>Bạn chưa có tài khoản? Đăng ký</Text>
       </TouchableOpacity>
     </View>
   );
