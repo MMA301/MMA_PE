@@ -43,8 +43,8 @@ export const validatePassword = (id, value) => {
 
   if (value !== "") {
     constraints.length = {
-      minimum: 8,
-      message: "Phải có ít nhất 8 ký tự",
+      minimum: 6,
+      message: "Phải có ít nhất 6 ký tự",
     };
   }
 
