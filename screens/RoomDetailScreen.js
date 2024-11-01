@@ -6,13 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  TextInput,
   Alert,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { selectRooms } from "../store/roomsSlice";
 import MapView, { Marker } from "react-native-maps";
-import { bookRoom } from "../store/bookingsSlice"; // Make sure this action is created
+import { bookRoom } from "../store/bookingsSlice";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const RoomDetailScreen = ({ route }) => {
   const { roomId } = route.params;
@@ -20,8 +20,10 @@ const RoomDetailScreen = ({ route }) => {
   const room = rooms.find((r) => r.id === roomId);
   const dispatch = useDispatch();
 
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkOutDate, setCheckOutDate] = useState("");
+  const [checkInDate, setCheckInDate] = useState(new Date());
+  const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [showCheckInPicker, setShowCheckInPicker] = useState(false);
+  const [showCheckOutPicker, setShowCheckOutPicker] = useState(false);
 
   if (!room) {
     return <Text>Không tìm thấy phòng</Text>;
@@ -35,11 +37,10 @@ const RoomDetailScreen = ({ route }) => {
 
     const bookingData = {
       roomId: room.id,
-      checkInDate,
-      checkOutDate,
+      checkInDate: checkInDate.toISOString(),
+      checkOutDate: checkOutDate.toISOString(),
       totalPrice:
-        (room.pricePerNight *
-          (new Date(checkOutDate) - new Date(checkInDate))) /
+        (room.pricePerNight * (checkOutDate - checkInDate)) /
         (1000 * 60 * 60 * 24),
       status: "confirmed",
       createdAt: new Date().toISOString(),
@@ -47,6 +48,18 @@ const RoomDetailScreen = ({ route }) => {
 
     dispatch(bookRoom(bookingData));
     Alert.alert("Đặt phòng thành công!", "Bạn đã đặt phòng thành công.");
+  };
+
+  const onCheckInChange = (event, selectedDate) => {
+    const currentDate = selectedDate || checkInDate;
+    setShowCheckInPicker(false);
+    setCheckInDate(currentDate);
+  };
+
+  const onCheckOutChange = (event, selectedDate) => {
+    const currentDate = selectedDate || checkOutDate;
+    setShowCheckOutPicker(false);
+    setCheckOutDate(currentDate);
   };
 
   return (
@@ -90,18 +103,35 @@ const RoomDetailScreen = ({ route }) => {
 
       <View style={styles.divider} />
 
-      <TextInput
+      <TouchableOpacity
         style={styles.input}
-        placeholder="Ngày nhận phòng (YYYY-MM-DD)"
-        value={checkInDate}
-        onChangeText={setCheckInDate}
-      />
-      <TextInput
+        onPress={() => setShowCheckInPicker(true)}
+      >
+        <Text>{checkInDate.toLocaleDateString()}</Text>
+      </TouchableOpacity>
+      {showCheckInPicker && (
+        <DateTimePicker
+          value={checkInDate}
+          mode="date"
+          display="default"
+          onChange={onCheckInChange}
+        />
+      )}
+
+      <TouchableOpacity
         style={styles.input}
-        placeholder="Ngày trả phòng (YYYY-MM-DD)"
-        value={checkOutDate}
-        onChangeText={setCheckOutDate}
-      />
+        onPress={() => setShowCheckOutPicker(true)}
+      >
+        <Text>{checkOutDate.toLocaleDateString()}</Text>
+      </TouchableOpacity>
+      {showCheckOutPicker && (
+        <DateTimePicker
+          value={checkOutDate}
+          mode="date"
+          display="default"
+          onChange={onCheckOutChange}
+        />
+      )}
 
       <TouchableOpacity style={styles.bookButton} onPress={handleBooking}>
         <Text style={styles.bookButtonText}>Đặt phòng</Text>
@@ -166,6 +196,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     marginBottom: 16,
+    justifyContent: "center",
+    alignItems: "center",
   },
   bookButton: {
     backgroundColor: "#3498db",
