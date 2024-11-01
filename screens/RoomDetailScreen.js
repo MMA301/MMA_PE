@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
-  Button,
+  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import { useSelector } from "react-redux";
@@ -28,12 +28,16 @@ const RoomDetailScreen = ({ route }) => {
       <Text style={styles.roomPrice}>${room.pricePerNight}/đêm</Text>
       <Text style={styles.roomDescription}>{room.description}</Text>
 
+      <View style={styles.divider} />
+
       <Text style={styles.amenitiesTitle}>Tiện nghi:</Text>
       {room.amenities.map((amenity, index) => (
         <Text key={index} style={styles.amenity}>
-          {amenity}
+          • {amenity}
         </Text>
       ))}
+
+      <View style={styles.divider} />
 
       <MapView
         style={styles.map}
@@ -54,11 +58,14 @@ const RoomDetailScreen = ({ route }) => {
         />
       </MapView>
 
-      <Button
+      <View style={styles.divider} />
+
+      <TouchableOpacity
         style={styles.bookButton}
-        title="Đặt phòng"
         onPress={() => alert("Chức năng đặt phòng sẽ được triển khai ở đây!")}
-      />
+      >
+        <Text style={styles.bookButtonText}>Đặt phòng</Text>
+      </TouchableOpacity>
       <View style={{ paddingBottom: 50 }} />
     </ScrollView>
   );
@@ -68,50 +75,67 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "#f9f9f9",
   },
   roomImage: {
     width: "100%",
-    height: 200,
-    borderRadius: 8,
+    height: 250,
+    borderRadius: 12,
+    marginBottom: 12,
   },
   roomTitle: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    marginVertical: 8,
+    color: "#333",
+    marginVertical: 4,
   },
   roomLocation: {
     fontSize: 18,
     color: "#888",
+    marginBottom: 4,
   },
   roomPrice: {
-    fontSize: 20,
-    color: "#3498db",
+    fontSize: 22,
+    color: "#e67e22",
     marginVertical: 8,
   },
   roomDescription: {
     fontSize: 16,
+    color: "#555",
     marginVertical: 8,
   },
   amenitiesTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
-    marginVertical: 8,
+    marginVertical: 12,
   },
   amenity: {
     fontSize: 16,
-    marginVertical: 4,
+    color: "#444",
+    marginVertical: 2,
   },
   map: {
-    height: 200,
+    height: 250,
     marginVertical: 16,
-    borderRadius: 8,
+    borderRadius: 12,
   },
   bookButton: {
-    fontSize: 20,
-    color: "#3498db",
+    backgroundColor: "#3498db",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginVertical: 20,
+    elevation: 3,
+  },
+  bookButtonText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#ddd",
     marginVertical: 16,
-    paddingBottom: 50,
   },
 });
 
