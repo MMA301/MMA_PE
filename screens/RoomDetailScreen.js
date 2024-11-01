@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,26 +6,55 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  TextInput,
+  Alert,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectRooms } from "../store/roomsSlice";
 import MapView, { Marker } from "react-native-maps";
+import { bookRoom } from "../store/bookingsSlice"; // Make sure this action is created
 
 const RoomDetailScreen = ({ route }) => {
   const { roomId } = route.params;
   const rooms = useSelector(selectRooms);
   const room = rooms.find((r) => r.id === roomId);
+  const dispatch = useDispatch();
+
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
 
   if (!room) {
     return <Text>Không tìm thấy phòng</Text>;
   }
+
+  const handleBooking = () => {
+    if (!checkInDate || !checkOutDate) {
+      Alert.alert("Vui lòng nhập ngày nhận và trả phòng.");
+      return;
+    }
+
+    const bookingData = {
+      roomId: room.id,
+      checkInDate,
+      checkOutDate,
+      totalPrice:
+        (room.pricePerNight *
+          (new Date(checkOutDate) - new Date(checkInDate))) /
+        (1000 * 60 * 60 * 24),
+      status: "confirmed",
+      createdAt: new Date().toISOString(),
+    };
+
+    dispatch(bookRoom(bookingData));
+    Alert.alert("Đặt phòng thành công!", "Bạn đã đặt phòng thành công.");
+  };
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Image source={{ uri: room.image }} style={styles.roomImage} />
       <Text style={styles.roomTitle}>{room.name}</Text>
       <Text style={styles.roomLocation}>{room.location}</Text>
-      <Text style={styles.roomPrice}>${room.pricePerNight}/đêm</Text>
+      <Text style={styles.roomPrice}>{room.pricePerNight} VNĐ/đêm</Text>
       <Text style={styles.roomDescription}>{room.description}</Text>
 
       <View style={styles.divider} />
@@ -61,10 +90,20 @@ const RoomDetailScreen = ({ route }) => {
 
       <View style={styles.divider} />
 
-      <TouchableOpacity
-        style={styles.bookButton}
-        onPress={() => alert("Chức năng đặt phòng sẽ được triển khai ở đây!")}
-      >
+      <TextInput
+        style={styles.input}
+        placeholder="Ngày nhận phòng (YYYY-MM-DD)"
+        value={checkInDate}
+        onChangeText={setCheckInDate}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Ngày trả phòng (YYYY-MM-DD)"
+        value={checkOutDate}
+        onChangeText={setCheckOutDate}
+      />
+
+      <TouchableOpacity style={styles.bookButton} onPress={handleBooking}>
         <Text style={styles.bookButtonText}>Đặt phòng</Text>
       </TouchableOpacity>
       <View style={{ paddingBottom: 50 }} />
@@ -119,6 +158,14 @@ const styles = StyleSheet.create({
     height: 250,
     marginVertical: 16,
     borderRadius: 12,
+  },
+  input: {
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 16,
   },
   bookButton: {
     backgroundColor: "#3498db",
