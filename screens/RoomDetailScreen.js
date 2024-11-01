@@ -21,7 +21,7 @@ const RoomDetailScreen = ({ route }) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Image source={{ uri: room.image }} style={styles.roomImage} />
       <Text style={styles.roomTitle}>{room.name}</Text>
       <Text style={styles.roomLocation}>{room.location}</Text>
