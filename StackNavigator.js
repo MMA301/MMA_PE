@@ -23,10 +23,10 @@ const StackNavigator = () => {
     return (
       <Tab.Navigator>
         <Tab.Screen
-          name="Home"
+          name="Trang chủ"
           component={HomeScreen}
           options={{
-            tabBarLabel: "Home",
+            tabBarLabel: "Trang chủ",
             headerShown: false,
             tabBarIcon: ({ focused }) =>
               focused ? (
@@ -38,10 +38,10 @@ const StackNavigator = () => {
         />
 
         <Tab.Screen
-          name="Bookings"
+          name="Đặt phòng"
           component={BookingScreen}
           options={{
-            tabBarLabel: "Bookings",
+            tabBarLabel: "Đặt phòng",
             headerShown: false,
             tabBarIcon: ({ focused }) =>
               focused ? (
