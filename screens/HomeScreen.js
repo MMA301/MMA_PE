@@ -16,7 +16,7 @@ import {
 } from "../store/roomsSlice";
 import Header from "../components/Header";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const rooms = useSelector(selectRooms);
   const roomsStatus = useSelector(selectRoomsStatus);
@@ -32,7 +32,9 @@ const HomeScreen = () => {
   const renderRoomItem = ({ item }) => (
     <TouchableOpacity
       style={styles.roomItem}
-      onPress={() => navigation.navigate("RoomDetail", { roomId: item.id })}
+      onPress={() =>
+        navigation.navigate("RoomDetailScreen", { roomId: item.id })
+      }
     >
       <Image source={{ uri: item.image }} style={styles.roomImage} />
       <View style={styles.roomInfo}>

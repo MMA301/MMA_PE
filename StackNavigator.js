@@ -11,6 +11,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import { useSelector } from "react-redux";
+import RoomDetailScreen from "./screens/RoomDetailScreen";
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -23,7 +24,7 @@ const StackNavigator = () => {
     return (
       <Tab.Navigator>
         <Tab.Screen
-          name="Trang chủ"
+          name="HomeScreen"
           component={HomeScreen}
           options={{
             tabBarLabel: "Trang chủ",
@@ -38,7 +39,7 @@ const StackNavigator = () => {
         />
 
         <Tab.Screen
-          name="Đặt phòng"
+          name="BookingScreen"
           component={BookingScreen}
           options={{
             tabBarLabel: "Đặt phòng",
@@ -67,11 +68,17 @@ const StackNavigator = () => {
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           </>
         ) : (
-          <Stack.Screen
-            name="Main"
-            component={BottomTabs}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name="Main"
+              component={BottomTabs}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="RoomDetailScreen"
+              component={RoomDetailScreen}
+            />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
