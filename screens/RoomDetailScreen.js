@@ -39,6 +39,7 @@ const RoomDetailScreen = ({ route }) => {
 
       <View style={styles.divider} />
 
+      <Text style={styles.amenitiesTitle}>Bản đồ:</Text>
       <MapView
         style={styles.map}
         initialRegion={{
