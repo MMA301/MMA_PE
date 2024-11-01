@@ -56,6 +56,7 @@ const HomeScreen = ({ navigation }) => {
           renderItem={renderRoomItem}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>
@@ -67,35 +68,49 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#ffffff",
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
   list: {
     paddingBottom: 16,
   },
   roomItem: {
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    elevation: 3,
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
+    elevation: 4,
     marginBottom: 16,
     overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   roomImage: {
     width: "100%",
     height: 200,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   roomInfo: {
     padding: 16,
   },
   roomLocation: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
+    color: "#333",
   },
   roomPrice: {
-    fontSize: 16,
-    color: "#3498db",
+    fontSize: 18,
+    color: "#e67e22",
+    marginVertical: 4,
   },
   roomDescription: {
     fontSize: 14,
-    color: "#666",
+    color: "#7f8c8d",
+    marginTop: 4,
   },
 });
