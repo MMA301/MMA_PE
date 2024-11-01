@@ -30,17 +30,6 @@ const HomeScreen = () => {
   }, [roomsStatus, dispatch]);
 
   const renderRoomItem = ({ item }) => (
-    // <TouchableOpacity
-    //   style={styles.roomItem}
-    //   onPress={() => navigation.navigate("RoomDetail", { roomId: item.id })}
-    // >
-    //   <Image source={{ uri: item.image }} style={styles.roomImage} />
-    //   <View style={styles.roomInfo}>
-    //     <Text style={styles.roomLocation}>{item.location}</Text>
-    //     <Text style={styles.roomPrice}>${item.pricePerNight}/đêm</Text>
-    //     <Text style={styles.roomDescription}>{item.description}</Text>
-    //   </View>
-    // </TouchableOpacity>
     <TouchableOpacity
       style={styles.roomItem}
       onPress={() => navigation.navigate("RoomDetail", { roomId: item.id })}
